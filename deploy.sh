@@ -1,7 +1,7 @@
 #!/bin/bash
 # ------------------------------------------------------------------
 # [Steve Irvine] Simple Idempotent Rails deploy Script
-#          Script to be called by Vagrant to provision a basic rails app
+# Script to be called by Vagrant to provision a basic rails app
 # ------------------------------------------------------------------
 
 # VARS
@@ -13,11 +13,9 @@ RAILS_VERSION="4.2.3"
 
 # Functions
 log()  { printf "%b\n" "$*"; }
-debug(){ [[ ${rvm_debug_flag:-0} -eq 0 ]] || printf "%b\n" "Running($#): $*"; }
 fail() { log "\nERROR: $*\n" ; exit 1 ; }
 
 # --- Body --------------------------------------------------------
-#  SCRIPT LOGIC GOES HERE
 log "Updating apt cache"
 sudo apt-get update 1>/dev/null
 
@@ -27,20 +25,20 @@ sudo apt-get update 1>/dev/null
 sudo apt-get install -y postgresql=$POSTGRES_VERSION 1>/dev/null
 if [[ $? > 0 ]]
 then
-    fail "Postgres install failed - exiting"
+  fail "Postgres install failed - exiting"
 else
-    log "Postgres version $POSTGRES_VERSION already installed"
+  log "Postgres version $POSTGRES_VERSION already installed"
 fi
 
 # Idempotency check for database
 if [[ `sudo -u postgres psql -lqt | cut -d \| -f 1 | grep -w $RAILS_APP_NAME` ]]
 then
-    log "$RAILS_APP_NAME database already exists"
+  log "$RAILS_APP_NAME database already exists"
 else
-    log "creating rails db"
-    sudo -u postgres createuser vagrant
-    sudo -u postgres createdb $RAILS_APP_NAME --owner=vagrant
-    log "db created"
+  log "creating rails db"
+  sudo -u postgres createuser vagrant
+  sudo -u postgres createdb $RAILS_APP_NAME --owner=vagrant
+  log "db created"
 fi
 
 # Deploy ruby via RVM if it is not already the version we want
@@ -83,7 +81,7 @@ else
   rails new $RAILS_APP_NAME
 fi
 
-# Start rails server if it isn't already run"
+# Start rails server if it isn't already running
 if [[ -e /home/vagrant/$RAILS_APP_NAME/tmp/pids/server.pid ]]
 then
   log "Rails app $RAILS_APP_NAME already running, or stale pid found"
