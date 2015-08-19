@@ -4,11 +4,7 @@
 #          Script to be called by Vagrant to provision a basic rails app
 # ------------------------------------------------------------------
 
-VERSION="0.1.0"
-SUBJECT="IRV1701"
-
 # VARS
-
 POSTGRES_VERSION="9.3+154ubuntu1"
 RAILS_APP_NAME="rails-demo"
 RUBY_VERSION="ruby-2.2.2"
