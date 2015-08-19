@@ -64,7 +64,7 @@ fi
 
 # deploy nodejs
 log "checking node.js is version $NODEJS_VERSION"
-sudo apt-get -y install nodejs=0.10.25~dfsg2-2ubuntu1 #1>/dev/null
+sudo apt-get -y install nodejs=$NODEJS_VERSION #1>/dev/null
 
 # Deploy rails
 if [[ `rails -v | cut -d ' ' -f2` == $RAILS_VERSION ]]
