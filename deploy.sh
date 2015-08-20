@@ -27,7 +27,7 @@ if [[ $? > 0 ]]
 then
   fail "Postgres install failed - exiting"
 else
-  log "Postgres version $POSTGRES_VERSION already installed"
+  log "Postgres version $POSTGRES_VERSION installed"
 fi
 
 # Idempotency check for database
@@ -62,7 +62,13 @@ fi
 
 # deploy nodejs
 log "checking node.js is version $NODEJS_VERSION"
-sudo apt-get -y install nodejs=$NODEJS_VERSION #1>/dev/null
+sudo apt-get -y install nodejs=$NODEJS_VERSION 1>/dev/null
+if [[ $? > 0 ]]
+then
+  fail "NodeJS install failed - exiting"
+else
+  log "NodeJS version $NODEJS_VERSION installed"
+fi
 
 # Deploy rails
 if [[ `rails -v | cut -d ' ' -f2` == $RAILS_VERSION ]]
