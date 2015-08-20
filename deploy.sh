@@ -94,7 +94,7 @@ then
 else
   log "starting $RAILS_APP_NAME"
   cd $RAILS_APP_NAME
-  bin/rails server -b 0.0.0.0 -d
+  bin/rails server -b `ifconfig eth0 | grep 'inet addr' | awk {' print $2 '} | cut -d ':' -f2` -d
 fi
 
 exit 0
